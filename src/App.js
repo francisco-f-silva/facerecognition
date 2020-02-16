@@ -79,7 +79,7 @@ class App extends Component {
 
   onButtonSubmit = (event) => {
     this.setState({imageUrl: this.state.input});
-    fetch('http://localhost:3000/imageurl', {
+    fetch('https://evening-chamber-60133.herokuapp.com/imageurl', {
       method: 'post',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
@@ -90,7 +90,7 @@ class App extends Component {
       .then(response => this.calculateFaceLocations(response))
       .then(boxes => {
         if (boxes.length) {
-          fetch('http://localhost:3000/image', {
+          fetch('https://evening-chamber-60133.herokuapp.com/image', {
             method: 'put',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -99,7 +99,9 @@ class App extends Component {
           })
             .then(response => response.json())
             .then(count => {
-              this.setState(Object.assign(this.state.user, {entries: count})); // if we used setState({user: {entries: count}}), it would update all attributes of user
+              if (!isNaN(count)) {
+                this.setState(Object.assign(this.state.user, {entries: count})); // if we used setState({user: {entries: count}}), it would update all attributes of user
+              }
             })
             .catch(console.log) // catches network errors only
           ; 
