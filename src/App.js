@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Particles from 'react-particles-js';
-import Clarifai from 'clarifai';
 import Navigation from './components/Navigation/Navigation';
 import SignIn from './components/SignIn/SignIn';
 import Register from './components/Register/Register';
@@ -9,10 +8,6 @@ import Rank from './components/Rank/Rank';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 import './App.css';
-
-const app = new Clarifai.App({
- apiKey: '39c7f5269c8f40d38ab3a96dc546d3a7'
-});
 
 const particlesOptions = {
   particles: {
@@ -84,10 +79,14 @@ class App extends Component {
 
   onButtonSubmit = (event) => {
     this.setState({imageUrl: this.state.input});
-    app.models
-      .predict(
-        Clarifai.FACE_DETECT_MODEL, 
-        this.state.input) // if we use imageUrl here, it will assume the old imageUrl value
+    fetch('http://localhost:3000/imageurl', {
+      method: 'post',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        input: this.state.input // if we use imageUrl here, it will assume the old imageUrl value
+      })
+    })
+      .then(response => response.json())
       .then(response => this.calculateFaceLocations(response))
       .then(boxes => {
         if (boxes.length) {
