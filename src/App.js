@@ -102,12 +102,13 @@ class App extends Component {
             .then(count => {
               this.setState(Object.assign(this.state.user, {entries: count})); // if we used setState({user: {entries: count}}), it would update all attributes of user
             })
-            .then(this.displayFaceBoxes(boxes))
+            .catch(console.log) // catches network errors only
           ; 
         }
+        this.displayFaceBoxes(boxes);
       })
       .catch(err => {
-        console.log('Ooooopss, error!!!');
+        console.log('Ooooopss, error!!! Maybe picture doesn\'t have faces.');
         this.displayFaceBoxes([]);
       })
     ;
