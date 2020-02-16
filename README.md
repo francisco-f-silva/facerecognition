@@ -1,4 +1,10 @@
+### facerecognition
+
+This is the *frontend repository* for the 'Face Recognition' web app. The backend repository can be found [here](https://github.com/francisco-f-silva/facerecognition-api).
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## 'Face Recognition' web app
 
 This app was developed using Javascript as prime language both in frontend and backend.
 
